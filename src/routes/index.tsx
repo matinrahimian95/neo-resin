@@ -17,13 +17,13 @@ import textureImg from "@/assets/texture.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "نئو رزین | هنر رزین دست‌ساز، سیاه و طلا" },
+      { title: "نئو رزین | هنر رزین دست‌ساز" },
       {
         name: "description",
         content:
           "بوتیک آنلاین نئو رزین؛ سینی، ساعت، زیورآلات و اکسسوری رزین دست‌ساز با طراحی لوکس سیاه و طلایی و امکان سفارش اختصاصی.",
       },
-      { property: "og:title", content: "نئو رزین | هنر رزین دست‌ساز، سیاه و طلا" },
+      { property: "og:title", content: "نئو رزین | هنر رزین دست‌ساز" },
       {
         property: "og:description",
         content: "بوتیک آنلاین نئو رزین؛ سینی، ساعت، زیورآلات و اکسسوری رزین دست‌ساز با طراحی لوکس سیاه و طلایی و امکان سفارش اختصاصی.",
