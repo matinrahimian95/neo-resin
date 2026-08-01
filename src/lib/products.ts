@@ -48,7 +48,7 @@ const defaultSizes = [
   { label: "بزرگ", multiplier: 1.35 },
 ];
 
-export const products: Product[] = [
+const baseProducts: Product[] = [
   {
     id: "tray-noir",
     name: "سینی نوآر طلاکوب",
