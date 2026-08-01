@@ -2,13 +2,13 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import type { ReactNode } from "react";
 import { products, type Product } from "./products";
 
-export type CartLine = { id: string; qty: number; size?: string };
+export type CartLine = { id: string; qty: number; size?: string | undefined };
 
 export type CartItem = {
   key: string;
   product: Product;
   qty: number;
-  size?: string;
+  size?: string | undefined;
   unitPrice: number;
 };
 
