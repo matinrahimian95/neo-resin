@@ -47,15 +47,42 @@ export function Footer() {
           <ul className="space-y-3 text-muted-foreground">
             <li className="flex items-center gap-2">
               <Instagram className="size-4 shrink-0 text-gold" />
-              <span dir="ltr">@neo_resin</span>
+              <a
+                href="https://instagram.com/neo_resin_"
+                target="_blank"
+                rel="noopener noreferrer"
+                dir="ltr"
+                className="transition-colors hover:text-gold"
+              >
+                @neo_resin_
+              </a>
             </li>
             <li className="flex items-center gap-2">
               <Phone className="size-4 shrink-0 text-gold" />
-              <span dir="ltr">+98 912 000 0000</span>
+              <a href="tel:+989370956690" dir="ltr" className="transition-colors hover:text-gold">
+                0937 095 6690
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <Phone className="size-4 shrink-0 text-gold" />
+              <a
+                href="https://wa.me/989370956690"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors hover:text-gold"
+              >
+                واتساپ
+              </a>
             </li>
             <li className="flex items-center gap-2">
               <Mail className="size-4 shrink-0 text-gold" />
-              <span dir="ltr">hello@neoresin.art</span>
+              <a
+                href="mailto:matinrahimian95@gmail.com"
+                dir="ltr"
+                className="transition-colors hover:text-gold"
+              >
+                matinrahimian95@gmail.com
+              </a>
             </li>
           </ul>
         </div>
