@@ -108,12 +108,13 @@ function CheckoutPage() {
           <aside className="h-fit rounded-sm hairline bg-card/50 p-6">
             <h2 className="text-sm font-extrabold">خلاصه سفارش</h2>
             <ul className="mt-5 space-y-3 text-xs text-muted-foreground">
-              {items.map(({ product, qty }) => (
-                <li key={product.id} className="flex justify-between gap-3">
+              {items.map(({ key, product, qty, size, unitPrice }) => (
+                <li key={key} className="flex justify-between gap-3">
                   <span className="min-w-0 truncate">
-                    {product.name} × {qty}
+                    {product.name}
+                    {size ? ` (سایز ${size})` : ""} × {qty}
                   </span>
-                  <span className="shrink-0">{formatPrice(product.price * qty)}</span>
+                  <span className="shrink-0">{formatPrice(unitPrice * qty)}</span>
                 </li>
               ))}
             </ul>

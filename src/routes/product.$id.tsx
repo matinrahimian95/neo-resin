@@ -147,7 +147,7 @@ function ProductPage() {
             <button
               type="button"
               onClick={() => {
-                add(product.id, qty);
+                add(product.id, qty, size?.label);
                 toast.success("به سبد خرید اضافه شد", {
                   description: `${product.name}${size ? ` — سایز ${size.label}` : ""} × ${qty}`,
                 });

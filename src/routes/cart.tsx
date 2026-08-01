@@ -36,9 +36,9 @@ function CartPage() {
       ) : (
         <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
           <ul className="space-y-4">
-            {items.map(({ product, qty }) => (
+            {items.map(({ key, product, qty, size, unitPrice }) => (
               <li
-                key={product.id}
+                key={key}
                 className="grid grid-cols-[80px_minmax(0,1fr)] items-center gap-4 rounded-sm hairline p-4"
               >
                 <img
@@ -55,18 +55,21 @@ function CartPage() {
                     <button
                       type="button"
                       aria-label="حذف"
-                      onClick={() => remove(product.id)}
+                      onClick={() => remove(key)}
                       className="shrink-0 text-muted-foreground transition-colors hover:text-destructive"
                     >
                       <Trash2 className="size-4" />
                     </button>
                   </div>
-                  <p className="mt-1 text-xs text-gold">{formatPrice(product.price)}</p>
+                  {size ? (
+                    <p className="mt-1 text-[11px] text-muted-foreground">سایز: {size}</p>
+                  ) : null}
+                  <p className="mt-1 text-xs text-gold">{formatPrice(unitPrice)}</p>
                   <div className="mt-3 inline-flex items-center gap-3 rounded-sm hairline px-2 py-1">
                     <button
                       type="button"
                       aria-label="کاهش"
-                      onClick={() => setQty(product.id, qty - 1)}
+                      onClick={() => setQty(key, qty - 1)}
                       className="grid size-6 place-items-center text-muted-foreground hover:text-gold"
                     >
                       <Minus className="size-3.5" />
@@ -75,7 +78,7 @@ function CartPage() {
                     <button
                       type="button"
                       aria-label="افزایش"
-                      onClick={() => setQty(product.id, qty + 1)}
+                      onClick={() => setQty(key, qty + 1)}
                       className="grid size-6 place-items-center text-muted-foreground hover:text-gold"
                     >
                       <Plus className="size-3.5" />
