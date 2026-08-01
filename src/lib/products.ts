@@ -119,7 +119,23 @@ const baseProducts: Product[] = [
   },
 ];
 
+const galleryFor = (p: Product): string[] => [p.image, heroImg, textureImg, artistImg];
+
+export const products: Product[] = baseProducts.map((p) => ({
+  ...p,
+  gallery: galleryFor(p),
+  sizes: p.sizes ?? defaultSizes,
+  details: p.details ?? [
+    "رزین اپوکسی درجه یک با پرداخت آینه‌ای",
+    "ورق طلا و رنگ‌دانه‌های دست‌ترکیب",
+    "هر اثر دست‌ساز و یکتاست؛ الگو تکرارشدنی نیست",
+    "زمان آماده‌سازی: ۵ تا ۱۰ روز کاری",
+  ],
+}));
+
 export const featuredProducts = products.filter((p) => p.featured);
+
+export const getProduct = (id: string) => products.find((p) => p.id === id);
 
 export const formatPrice = (value: number) =>
   `${new Intl.NumberFormat("fa-IR").format(value)} تومان`;
