@@ -3,6 +3,9 @@ import clockImg from "@/assets/cat-clock.jpg";
 import jewelryImg from "@/assets/cat-jewelry.jpg";
 import accessoriesImg from "@/assets/cat-accessories.jpg";
 import customImg from "@/assets/cat-custom.jpg";
+import heroImg from "@/assets/hero.jpg";
+import textureImg from "@/assets/texture.jpg";
+import artistImg from "@/assets/artist.jpg";
 
 export type CategorySlug = "trays" | "clocks" | "jewelry" | "accessories" | "custom";
 
@@ -34,9 +37,18 @@ export type Product = {
   image: string;
   description: string;
   featured?: boolean;
+  gallery?: string[];
+  sizes?: { label: string; multiplier: number }[];
+  details?: string[];
 };
 
-export const products: Product[] = [
+const defaultSizes = [
+  { label: "کوچک", multiplier: 0.8 },
+  { label: "متوسط", multiplier: 1 },
+  { label: "بزرگ", multiplier: 1.35 },
+];
+
+const baseProducts: Product[] = [
   {
     id: "tray-noir",
     name: "سینی نوآر طلاکوب",
@@ -107,7 +119,23 @@ export const products: Product[] = [
   },
 ];
 
+const galleryFor = (p: Product): string[] => [p.image, heroImg, textureImg, artistImg];
+
+export const products: Product[] = baseProducts.map((p) => ({
+  ...p,
+  gallery: galleryFor(p),
+  sizes: p.sizes ?? defaultSizes,
+  details: p.details ?? [
+    "رزین اپوکسی درجه یک با پرداخت آینه‌ای",
+    "ورق طلا و رنگ‌دانه‌های دست‌ترکیب",
+    "هر اثر دست‌ساز و یکتاست؛ الگو تکرارشدنی نیست",
+    "زمان آماده‌سازی: ۵ تا ۱۰ روز کاری",
+  ],
+}));
+
 export const featuredProducts = products.filter((p) => p.featured);
+
+export const getProduct = (id: string) => products.find((p) => p.id === id);
 
 export const formatPrice = (value: number) =>
   `${new Intl.NumberFormat("fa-IR").format(value)} تومان`;
