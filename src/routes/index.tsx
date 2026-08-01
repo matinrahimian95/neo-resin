@@ -186,13 +186,13 @@ function Index() {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <SectionHeading eyebrow="Gallery" title="اینستاگرام نئو رزین" />
           <p className="mt-4 text-center text-sm text-muted-foreground" dir="ltr">
-            @neo_resin
+            @neo_resin_
           </p>
           <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
             {instagramTiles.map((src, i) => (
               <a
                 key={i}
-                href="https://instagram.com/neo_resin"
+                href="https://instagram.com/neo_resin_"
                 target="_blank"
                 rel="noreferrer"
                 className="group relative aspect-square overflow-hidden rounded-sm hairline"
