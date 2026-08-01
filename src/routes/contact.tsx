@@ -64,15 +64,42 @@ function ContactPage() {
         <aside className="h-fit space-y-4 rounded-sm hairline bg-card/50 p-6 text-sm">
           <p className="flex items-center gap-3">
             <Phone className="size-4 shrink-0 text-gold" />
-            <span dir="ltr">+98 912 000 0000</span>
+            <a href="tel:+989370956690" dir="ltr" className="transition-colors hover:text-gold">
+              0937 095 6690
+            </a>
+          </p>
+          <p className="flex items-center gap-3">
+            <Phone className="size-4 shrink-0 text-gold" />
+            <a
+              href="https://wa.me/989370956690"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-gold"
+            >
+              واتساپ: <span dir="ltr">0937 095 6690</span>
+            </a>
           </p>
           <p className="flex items-center gap-3">
             <Mail className="size-4 shrink-0 text-gold" />
-            <span dir="ltr">hello@neoresin.art</span>
+            <a
+              href="mailto:matinrahimian95@gmail.com"
+              dir="ltr"
+              className="transition-colors hover:text-gold"
+            >
+              matinrahimian95@gmail.com
+            </a>
           </p>
           <p className="flex items-center gap-3">
             <Instagram className="size-4 shrink-0 text-gold" />
-            <span dir="ltr">@neo_resin</span>
+            <a
+              href="https://instagram.com/neo_resin_"
+              target="_blank"
+              rel="noopener noreferrer"
+              dir="ltr"
+              className="transition-colors hover:text-gold"
+            >
+              @neo_resin_
+            </a>
           </p>
           <p className="flex items-start gap-3 leading-7 text-muted-foreground">
             <MapPin className="mt-1 size-4 shrink-0 text-gold" />
