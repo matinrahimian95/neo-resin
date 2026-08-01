@@ -2,16 +2,26 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import type { ReactNode } from "react";
 import { products, type Product } from "./products";
 
-export type CartLine = { id: string; qty: number };
+export type CartLine = { id: string; qty: number; size?: string };
+
+export type CartItem = {
+  key: string;
+  product: Product;
+  qty: number;
+  size?: string;
+  unitPrice: number;
+};
+
+export const lineKey = (id: string, size?: string) => `${id}::${size ?? ""}`;
 
 type CartContextValue = {
   lines: CartLine[];
-  items: { product: Product; qty: number }[];
+  items: CartItem[];
   count: number;
   total: number;
-  add: (id: string, qty?: number) => void;
-  setQty: (id: string, qty: number) => void;
-  remove: (id: string) => void;
+  add: (id: string, qty?: number, size?: string) => void;
+  setQty: (key: string, qty: number) => void;
+  remove: (key: string) => void;
   clear: () => void;
 };
 
@@ -38,40 +48,53 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [lines]);
 
-  const add = useCallback((id: string, qty = 1) => {
+  const add = useCallback((id: string, qty = 1, size?: string) => {
     setLines((prev) => {
-      const found = prev.find((l) => l.id === id);
-      if (found) return prev.map((l) => (l.id === id ? { ...l, qty: l.qty + qty } : l));
-      return [...prev, { id, qty }];
+      const key = lineKey(id, size);
+      const found = prev.find((l) => lineKey(l.id, l.size) === key);
+      if (found)
+        return prev.map((l) =>
+          lineKey(l.id, l.size) === key ? { ...l, qty: l.qty + qty } : l,
+        );
+      return [...prev, { id, qty, size }];
     });
   }, []);
 
-  const setQty = useCallback((id: string, qty: number) => {
+  const setQty = useCallback((key: string, qty: number) => {
     setLines((prev) =>
       qty <= 0
-        ? prev.filter((l) => l.id !== id)
-        : prev.map((l) => (l.id === id ? { ...l, qty } : l)),
+        ? prev.filter((l) => lineKey(l.id, l.size) !== key)
+        : prev.map((l) => (lineKey(l.id, l.size) === key ? { ...l, qty } : l)),
     );
   }, []);
 
-  const remove = useCallback((id: string) => {
-    setLines((prev) => prev.filter((l) => l.id !== id));
+  const remove = useCallback((key: string) => {
+    setLines((prev) => prev.filter((l) => lineKey(l.id, l.size) !== key));
   }, []);
 
   const clear = useCallback(() => setLines([]), []);
 
   const value = useMemo<CartContextValue>(() => {
-    const items = lines
+    const items: CartItem[] = lines
       .map((l) => {
         const product = products.find((p) => p.id === l.id);
-        return product ? { product, qty: l.qty } : null;
+        if (!product) return null;
+        const multiplier =
+          product.sizes?.find((s) => s.label === l.size)?.multiplier ?? 1;
+        return {
+          key: lineKey(l.id, l.size),
+          product,
+          qty: l.qty,
+          size: l.size,
+          unitPrice: Math.round(product.price * multiplier),
+        };
       })
-      .filter(Boolean) as { product: Product; qty: number }[];
+      .filter(Boolean) as CartItem[];
     return {
       lines,
       items,
       count: items.reduce((s, i) => s + i.qty, 0),
-      total: items.reduce((s, i) => s + i.qty * i.product.price, 0),
+      total: items.reduce((s, i) => s + i.qty * i.unitPrice, 0),
       add,
       setQty,
       remove,
