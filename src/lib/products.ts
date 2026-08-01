@@ -3,6 +3,9 @@ import clockImg from "@/assets/cat-clock.jpg";
 import jewelryImg from "@/assets/cat-jewelry.jpg";
 import accessoriesImg from "@/assets/cat-accessories.jpg";
 import customImg from "@/assets/cat-custom.jpg";
+import heroImg from "@/assets/hero.jpg";
+import textureImg from "@/assets/texture.jpg";
+import artistImg from "@/assets/artist.jpg";
 
 export type CategorySlug = "trays" | "clocks" | "jewelry" | "accessories" | "custom";
 
@@ -34,7 +37,16 @@ export type Product = {
   image: string;
   description: string;
   featured?: boolean;
+  gallery?: string[];
+  sizes?: { label: string; multiplier: number }[];
+  details?: string[];
 };
+
+const defaultSizes = [
+  { label: "کوچک", multiplier: 0.8 },
+  { label: "متوسط", multiplier: 1 },
+  { label: "بزرگ", multiplier: 1.35 },
+];
 
 export const products: Product[] = [
   {
