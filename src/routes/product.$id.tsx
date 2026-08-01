@@ -17,13 +17,45 @@ export const Route = createFileRoute("/product/$id")({
       return { meta: [{ title: "محصول یافت نشد | نئو رزین" }, { name: "robots", content: "noindex" }] };
     }
     const p = loaderData.product;
+    const SITE = "https://neo-resin.lovable.app";
+    const url = `${SITE}/product/${p.id}`;
+    const image = p.image.startsWith("http") ? p.image : `${SITE}${p.image}`;
+    const title = `${p.name} | نئو رزین`;
     return {
       meta: [
-        { title: `${p.name} | نئو رزین` },
+        { title },
         { name: "description", content: p.description },
-        { property: "og:title", content: `${p.name} | نئو رزین` },
+        { property: "og:title", content: title },
         { property: "og:description", content: p.description },
         { property: "og:type", content: "product" },
+        { property: "og:url", content: url },
+        { property: "og:image", content: image },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: p.description },
+        { name: "twitter:image", content: image },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: p.name,
+            description: p.description,
+            image: [image],
+            url,
+            brand: { "@type": "Brand", name: "Neo_resin" },
+            offers: {
+              "@type": "Offer",
+              price: p.price,
+              priceCurrency: "IRR",
+              availability: "https://schema.org/InStock",
+              url,
+            },
+          }),
+        },
       ],
     };
   },
