@@ -73,7 +73,7 @@ function ProductPage() {
             <div className="pointer-events-none absolute inset-0 veil opacity-50" />
           </div>
           <div className="grid grid-cols-4 gap-3">
-            {gallery.map((src, i) => (
+            {gallery.map((src: string, i: number) => (
               <button
                 key={src + i}
                 type="button"
@@ -102,7 +102,7 @@ function ProductPage() {
             <div className="space-y-3">
               <p className="text-xs font-bold text-foreground">انتخاب سایز</p>
               <div className="flex flex-wrap gap-2">
-                {sizes.map((s, i) => (
+                {sizes.map((s: { label: string; multiplier: number }, i: number) => (
                   <button
                     key={s.label}
                     type="button"
@@ -166,7 +166,7 @@ function ProductPage() {
 
           {product.details?.length ? (
             <ul className="space-y-2 border-t border-border/60 pt-6 text-xs leading-7 text-muted-foreground">
-              {product.details.map((d) => (
+              {product.details.map((d: string) => (
                 <li key={d} className="flex gap-2">
                   <span className="text-gold">◆</span>
                   {d}
