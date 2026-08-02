@@ -11,8 +11,7 @@ export function Footer() {
             Handcrafted Resin Art
           </p>
           <p className="mt-4 max-w-xs text-sm leading-7 text-muted-foreground">
-            آثار رزین دست‌ساز، ساخته‌شده در آتلیه‌ای کوچک با وسواس یک جواهرساز و زبان طراحی سیاه و
-            طلا.
+            آثار رزین دست‌ساز؛ ساخته‌شده با دست، با تمرکز بر تمیزی، ظرافت و دقت در جزئیات.
           </p>
         </div>
 
