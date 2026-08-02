@@ -153,21 +153,31 @@ function Index() {
             />
           </div>
           <div>
-            <SectionHeading
-              align="start"
-              eyebrow="The Artist"
-              title="درباره هنرمند"
-              description="نئو رزین حاصل ده سال کار با رزین، رنگدانه و ورق طلاست. هر اثر از یک طرح دستی آغاز می‌شود، در چند لایه ریخته می‌شود و پس از هفته‌ها پخت و پرداخت، به یک سطح آینه‌ای می‌رسد."
-            />
-            <div className="mt-8 grid grid-cols-3 gap-4 text-center">
+            <SectionHeading align="start" eyebrow="The Artist" title="درباره هنرمند" />
+            <div className="mt-6 space-y-5 text-sm leading-8 text-muted-foreground md:text-base">
+              <p>
+                من مسیر نئو رزین را از گوشه‌ای از اتاقم شروع کردم؛ با ابزارهای ساده، چند قالب و
+                علاقه‌ای که روزبه‌روز جدی‌تر شد.
+              </p>
+              <p>
+                ۵ سال تجربه، ساخت چندصد قطعه رزینی و یادگیری مداوم، نئو رزین را قدم‌به‌قدم به چیزی
+                تبدیل کرد که امروز می‌بینید.
+              </p>
+              <p>
+                برای من، تمیزی، ظرافت و دقت در ساخت هر قطعه اهمیت دارد؛ چون باور دارم زیبایی یک اثر
+                دست‌ساز در جزئیات آن است.
+              </p>
+            </div>
+            <div className="mt-8 grid grid-cols-2 gap-4 text-center lg:grid-cols-4">
               {[
-                { n: "۱۰+", l: "سال تجربه" },
-                { n: "۸۰۰+", l: "اثر دست‌ساز" },
-                { n: "۱۰۰٪", l: "سفارشی‌سازی" },
+                { n: "+۵", l: "سال تجربه" },
+                { n: "چندصد قطعه", l: "ساخته‌شده با دست" },
+                { n: "از ۱۴۰۲", l: "شروع فعالیت" },
+                { n: "سفارش اختصاصی", l: "ساخت متناسب با سلیقه شما" },
               ].map((s) => (
                 <div key={s.l} className="rounded-sm hairline p-4">
-                  <p className="text-xl font-black text-gold">{s.n}</p>
-                  <p className="mt-1 text-[11px] text-muted-foreground">{s.l}</p>
+                  <p className="text-base font-black text-gold">{s.n}</p>
+                  <p className="mt-1 text-[11px] leading-5 text-muted-foreground">{s.l}</p>
                 </div>
               ))}
             </div>
