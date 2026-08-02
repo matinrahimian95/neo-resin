@@ -7,7 +7,7 @@ import { verifyOnlinePayment } from "@/lib/orders.functions";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/products";
 
-type Search = { Authority?: string; Status?: string };
+type Search = { Authority?: string | undefined; Status?: string | undefined };
 
 export const Route = createFileRoute("/payment/callback")({
   ssr: false,
