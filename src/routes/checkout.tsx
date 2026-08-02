@@ -201,6 +201,7 @@ function CheckoutPage() {
                         void navigator.clipboard?.writeText(CARD_TRANSFER.cardNumberRaw);
                         toast.success("شماره کارت کپی شد");
                       }}
+                      dir="ltr"
                       className="flex items-center gap-2 font-bold tracking-widest text-gold"
                     >
                       <Copy className="size-3.5" />
