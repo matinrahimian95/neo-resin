@@ -58,7 +58,6 @@ function Index() {
           <h1 className="max-w-3xl text-4xl leading-[1.25] font-black tracking-tight md:text-6xl md:leading-[1.2]">
   <span className="text-gold-gradient">هنر رزین دست‌ساز</span>
 </h1>
-
 <p className="mt-3 text-gold font-bold">
   نسخه آزمایشی سایت - Test Deploy
 </p>
