@@ -9,10 +9,14 @@ export const Route = createFileRoute("/about")({
       { title: "درباره هنرمند | نئو رزین" },
       {
         name: "description",
-        content: "داستان آتلیه نئو رزین؛ ده سال کار با رزین، رنگدانه و ورق طلا برای خلق آثار یکتا.",
+        content:
+          "داستان نئو رزین؛ مسیری که از گوشه‌ای از یک اتاق شروع شد و امروز حاصل ۵ سال تجربه و ساخت چندصد قطعه رزینی دست‌ساز است.",
       },
       { property: "og:title", content: "درباره هنرمند | نئو رزین" },
-      { property: "og:description", content: "داستان آتلیه نئو رزین و روش ساخت آثار دست‌ساز." },
+      {
+        property: "og:description",
+        content: "داستان نئو رزین و روش ساخت آثار دست‌ساز با تمرکز بر تمیزی، ظرافت و دقت.",
+      },
     ],
   }),
   component: AboutPage,
