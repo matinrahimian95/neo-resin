@@ -58,9 +58,6 @@ function Index() {
           <h1 className="max-w-3xl text-4xl leading-[1.25] font-black tracking-tight md:text-6xl md:leading-[1.2]">
   <span className="text-gold-gradient">هنر رزین دست‌ساز</span>
 </h1>
-<p className="mt-3 text-gold font-bold">
-  نسخه آزمایشی سایت - Test Deploy
-</p>
           <p className="mt-6 max-w-xl text-sm leading-8 text-muted-foreground md:text-base">
             هر قطعه در آتلیه نئو رزین با دست ریخته‌گری، پرداخت و امضا می‌شود. آثاری بی‌تکرار برای
             خانه‌ها و هدیه‌هایی که به یاد می‌مانند.
