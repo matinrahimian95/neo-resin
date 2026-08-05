@@ -418,8 +418,14 @@ function ReviewsSection({
           className="h-fit space-y-4 rounded-sm hairline p-6"
           onSubmit={(e) => {
             e.preventDefault();
-            if (authorName.trim().length < 2) return toast.error("نام باید حداقل ۲ حرف باشد.");
-            if (body.trim().length < 5) return toast.error("متن نظر خیلی کوتاه است.");
+            if (authorName.trim().length < 2) {
+              toast.error("نام باید حداقل ۲ حرف باشد.");
+              return;
+            }
+            if (body.trim().length < 5) {
+              toast.error("متن نظر خیلی کوتاه است.");
+              return;
+            }
             mutation.mutate({ slug, authorName: authorName.trim(), rating, body: body.trim() });
           }}
         >
