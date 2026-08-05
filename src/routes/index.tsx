@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChevronLeft, Instagram, Sparkles } from "lucide-react";
 import {
   Accordion,
@@ -8,7 +9,8 @@ import {
 } from "@/components/ui/accordion";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { ProductCard } from "@/components/site/ProductCard";
-import { categories, featuredProducts } from "@/lib/products";
+import { categories } from "@/lib/products";
+import { productsQueryOptions } from "@/lib/catalog.functions";
 import { faqs } from "@/lib/faqs";
 import heroImg from "@/assets/hero.jpg";
 import artistImg from "@/assets/artist.jpg";
@@ -31,6 +33,19 @@ export const Route = createFileRoute("/")({
     ],
   }),
   component: Index,
+  loader: ({ context }) => {
+    void context.queryClient.ensureQueryData(productsQueryOptions());
+  },
+  errorComponent: () => (
+    <div className="section-y mx-auto max-w-3xl px-5 text-center text-sm text-muted-foreground">
+      خطا در بارگذاری صفحه. لطفاً دوباره تلاش کنید.
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="section-y mx-auto max-w-3xl px-5 text-center text-sm text-muted-foreground">
+      صفحه یافت نشد.
+    </div>
+  ),
 });
 
 const instagramTiles = [heroImg, textureImg, artistImg, ...categories.map((c) => c.image)].slice(
@@ -39,6 +54,8 @@ const instagramTiles = [heroImg, textureImg, artistImg, ...categories.map((c) =>
 );
 
 function Index() {
+  const { data: products } = useSuspenseQuery(productsQueryOptions());
+  const featuredProducts = products.filter((p) => p.featured);
   return (
     <>
       {/* Hero */}
