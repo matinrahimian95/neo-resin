@@ -1,6 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
-import { products, type Product } from "./products";
+import { useQuery } from "@tanstack/react-query";
+import { productsQueryOptions } from "./catalog.functions";
+import type { Product } from "./products";
 
 export type CartLine = { id: string; qty: number; size?: string | undefined };
 
@@ -30,6 +32,7 @@ const STORAGE_KEY = "neo-resin-cart";
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
+  const { data: products } = useQuery(productsQueryOptions());
 
   useEffect(() => {
     try {
@@ -75,9 +78,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const clear = useCallback(() => setLines([]), []);
 
   const value = useMemo<CartContextValue>(() => {
+    const catalog: Product[] = products ?? [];
     const items: CartItem[] = lines
       .map((l) => {
-        const product = products.find((p) => p.id === l.id);
+        const product = catalog.find((p) => p.id === l.id);
         if (!product) return null;
         const multiplier =
           product.sizes?.find((s) => s.label === l.size)?.multiplier ?? 1;
@@ -100,7 +104,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       remove,
       clear,
     };
-  }, [lines, add, setQty, remove, clear]);
+  }, [lines, products, add, setQty, remove, clear]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
