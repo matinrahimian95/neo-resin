@@ -7,6 +7,20 @@ import heroImg from "@/assets/hero.jpg";
 import textureImg from "@/assets/texture.jpg";
 import artistImg from "@/assets/artist.jpg";
 
+/** کلید تصویر در دیتابیس → فایل واقعی داخل باندل */
+export const imageMap: Record<string, string> = {
+  tray: trayImg,
+  clock: clockImg,
+  jewelry: jewelryImg,
+  accessories: accessoriesImg,
+  custom: customImg,
+  hero: heroImg,
+  texture: textureImg,
+  artist: artistImg,
+};
+
+export const resolveImage = (key: string) => imageMap[key] ?? heroImg;
+
 export type CategorySlug = "trays" | "clocks" | "jewelry" | "accessories" | "custom";
 
 export type Category = {
@@ -29,6 +43,8 @@ export const categories: Category[] = [
   { slug: "custom", title: "سفارش اختصاصی", caption: "اثری تنها برای شما", image: customImg },
 ];
 
+export type ProductSize = { label: string; multiplier: number };
+
 export type Product = {
   id: string;
   name: string;
@@ -36,106 +52,28 @@ export type Product = {
   price: number;
   image: string;
   description: string;
-  featured?: boolean;
-  gallery?: string[];
-  sizes?: { label: string; multiplier: number }[];
-  details?: string[];
+  longDescription: string;
+  stock: number;
+  featured: boolean;
+  gallery: string[];
+  sizes: ProductSize[];
+  dimensions: Record<string, string>;
+  weightGrams: number | null;
+  material: string | null;
+  prepDays: number | null;
+  features: string[];
 };
 
-const defaultSizes = [
-  { label: "کوچک", multiplier: 0.8 },
-  { label: "متوسط", multiplier: 1 },
-  { label: "بزرگ", multiplier: 1.35 },
-];
+export type Review = {
+  id: string;
+  authorName: string;
+  rating: number;
+  body: string;
+  createdAt: string;
+};
 
-const baseProducts: Product[] = [
-  {
-    id: "tray-noir",
-    name: "سینی نوآر طلاکوب",
-    category: "trays",
-    price: 4850000,
-    image: trayImg,
-    description: "سینی رزین دست‌ساز با رگه‌های ورق طلا و دستگیره برنجی، مناسب پذیرایی رسمی.",
-    featured: true,
-  },
-  {
-    id: "clock-eclipse",
-    name: "ساعت اکلیپس",
-    category: "clocks",
-    price: 6200000,
-    image: clockImg,
-    description: "ساعت دیواری گرد با بستر مشکی مات و جریان‌های طلایی، موتور بی‌صدا.",
-    featured: true,
-  },
-  {
-    id: "jewel-drop",
-    name: "ست آویز قطره طلا",
-    category: "jewelry",
-    price: 1980000,
-    image: jewelryImg,
-    description: "گردنبند و گوشواره رزین شفاف با پولک‌های طلا و بندهای استیل طلایی.",
-    featured: true,
-  },
-  {
-    id: "acc-coaster",
-    name: "ست زیرلیوانی مرمر شب",
-    category: "accessories",
-    price: 1450000,
-    image: accessoriesImg,
-    description: "چهار زیرلیوانی رزین با لبه‌های طلایی و پایه نمدی.",
-    featured: true,
-  },
-  {
-    id: "custom-piece",
-    name: "سفارش اختصاصی رزین",
-    category: "custom",
-    price: 7500000,
-    image: customImg,
-    description: "طراحی و اجرای اثر سفارشی بر اساس ابعاد، رنگ و ایده شما.",
-  },
-  {
-    id: "tray-petite",
-    name: "سینی کوچک آتلیه",
-    category: "trays",
-    price: 2650000,
-    image: trayImg,
-    description: "سینی جمع‌وجور برای میز کنسول یا سرو دسر، پرداخت آینه‌ای.",
-  },
-  {
-    id: "clock-minimal",
-    name: "ساعت مینیمال طلا",
-    category: "clocks",
-    price: 4300000,
-    image: clockImg,
-    description: "طرح ساده با ایندکس‌های طلایی و بستر رزین شب‌رنگ.",
-  },
-  {
-    id: "acc-keyring",
-    name: "جاکلیدی رزین طلا",
-    category: "accessories",
-    price: 620000,
-    image: accessoriesImg,
-    description: "جاکلیدی دست‌ساز با حلقه طلایی و رزین مشکی براق.",
-  },
-];
-
-const galleryFor = (p: Product): string[] => [p.image, heroImg, textureImg, artistImg];
-
-export const products: Product[] = baseProducts.map((p) => ({
-  ...p,
-  gallery: galleryFor(p),
-  sizes: p.sizes ?? defaultSizes,
-  details: p.details ?? [
-    "رزین اپوکسی درجه یک با پرداخت آینه‌ای",
-    "ورق طلا و رنگ‌دانه‌های دست‌ترکیب",
-    "هر اثر دست‌ساز و یکتاست؛ الگو تکرارشدنی نیست",
-    "زمان آماده‌سازی: ۵ تا ۱۰ روز کاری",
-  ],
-}));
-
-export const featuredProducts = products.filter((p) => p.featured);
-
-export const getProduct = (id: string) => products.find((p) => p.id === id);
+export const stockLabel = (stock: number) =>
+  stock <= 0 ? "ناموجود" : stock <= 3 ? `تنها ${stock} عدد باقی مانده` : "موجود در انبار";
 
 export const formatPrice = (value: number) =>
   `${new Intl.NumberFormat("fa-IR").format(value)} تومان`;
