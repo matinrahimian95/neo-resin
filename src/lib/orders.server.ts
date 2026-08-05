@@ -1,4 +1,4 @@
-import { products } from "./products";
+import { fetchProducts } from "./catalog.server";
 import type { CustomerInput } from "./orders.schema";
 
 export type PricedItem = {
@@ -9,11 +9,18 @@ export type PricedItem = {
   unitPrice: number;
 };
 
-/** قیمت‌ها همیشه سمت سرور از روی کاتالوگ محاسبه می‌شوند، نه از ورودی کاربر. */
-export function priceLines(lines: CustomerInput["lines"]): { items: PricedItem[]; amount: number } {
+/** قیمت‌ها همیشه سمت سرور از روی کاتالوگ دیتابیس محاسبه می‌شوند، نه از ورودی کاربر. */
+export async function priceLines(
+  lines: CustomerInput["lines"],
+): Promise<{ items: PricedItem[]; amount: number }> {
+  const products = await fetchProducts();
   const items: PricedItem[] = lines.map((line) => {
     const product = products.find((p) => p.id === line.id);
     if (!product) throw new Error(`محصول نامعتبر: ${line.id}`);
+    if (product.stock <= 0) throw new Error(`«${product.name}» در حال حاضر ناموجود است.`);
+    if (line.qty > product.stock) {
+      throw new Error(`موجودی «${product.name}» کمتر از تعداد درخواستی است.`);
+    }
     const multiplier = product.sizes?.find((s) => s.label === line.size)?.multiplier ?? 1;
     return {
       id: product.id,
