@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { ProductCard } from "@/components/site/ProductCard";
-import { categories, products } from "@/lib/products";
+import { categories } from "@/lib/products";
+import { getProducts } from "@/lib/products.api";
 
 const searchSchema = z.object({
   category: z.enum(["trays", "clocks", "jewelry", "accessories", "custom"]).optional(),
@@ -10,6 +11,11 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute("/shop")({
   validateSearch: searchSchema,
+
+  loader: async () => {
+    const products = await getProducts();
+    return { products };
+  },
   head: () => ({
     meta: [
       { title: "فروشگاه | آثار رزین دست‌ساز نئو رزین" },
@@ -26,8 +32,12 @@ export const Route = createFileRoute("/shop")({
 
 function ShopPage() {
   const { category } = Route.useSearch();
-  const list = category ? products.filter((p) => p.category === category) : products;
 
+  const { products } = Route.useLoaderData();
+
+  const list = category
+    ? products.filter((p) => p.category === category)
+    : products;
   return (
     <section className="section-y mx-auto max-w-7xl px-5 md:px-8">
       <SectionHeading
