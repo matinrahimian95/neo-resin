@@ -16,8 +16,6 @@ export const Route = createFileRoute("/shop")({
 loader: ({ context }) => {
     void context.queryClient.ensureQueryData(productsQueryOptions());
   },
-
-  },
   head: () => ({
     meta: [
       { title: "فروشگاه | آثار رزین دست‌ساز نئو رزین" },
@@ -46,7 +44,7 @@ function ShopPage() {
   const { category } = Route.useSearch();
   const { data: products } = useSuspenseQuery(productsQueryOptions());
   const list = category ? products.filter((p) => p.category === category) : products;
-  
+
   return (
     <section className="section-y mx-auto max-w-7xl px-5 md:px-8">
       <SectionHeading
