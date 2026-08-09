@@ -8,7 +8,7 @@ export const submitCardOrder = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => cardOrderSchema.parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { items, amount } = priceLines(data.lines);
+    const { items, amount } = await priceLines(data.lines);
     const { bytes, contentType } = decodeBase64(data.receipt.base64);
 
     const { data: order, error } = await supabaseAdmin
@@ -47,7 +47,7 @@ export const startOnlinePayment = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { requestPayment } = await import("./zarinpal.server");
-    const { items, amount } = priceLines(data.lines);
+    const { items, amount } = await priceLines(data.lines);
 
     const { data: order, error } = await supabaseAdmin
       .from("orders")

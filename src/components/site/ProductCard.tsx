@@ -19,6 +19,11 @@ export function ProductCard({ product }: { product: Product }) {
             className="size-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
           />
           <div className="pointer-events-none absolute inset-0 veil opacity-70" />
+          {product.stock <= 0 ? (
+            <span className="absolute right-3 top-3 rounded-sm bg-background/85 px-2.5 py-1 text-[10px] font-bold text-muted-foreground">
+              ناموجود
+            </span>
+          ) : null}
         </div>
       </Link>
       <div className="space-y-3 p-5">
@@ -34,13 +39,14 @@ export function ProductCard({ product }: { product: Product }) {
           <span className="text-sm font-bold text-gold">{formatPrice(product.price)}</span>
           <button
             type="button"
+            disabled={product.stock <= 0}
             onClick={() => {
               add(product.id);
               toast.success("به سبد خرید اضافه شد", { description: product.name });
             }}
-            className="rounded-sm bg-gold-gradient px-4 py-2 text-xs font-bold text-primary-foreground transition-opacity hover:opacity-90"
+            className="rounded-sm bg-gold-gradient px-4 py-2 text-xs font-bold text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            افزودن به سبد
+            {product.stock > 0 ? "افزودن به سبد" : "ناموجود"}
           </button>
         </div>
       </div>

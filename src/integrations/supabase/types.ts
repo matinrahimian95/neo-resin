@@ -80,6 +80,113 @@ export type Database = {
         }
         Relationships: []
       }
+      product_reviews: {
+        Row: {
+          author_name: string
+          body: string
+          created_at: string
+          id: string
+          is_approved: boolean
+          product_id: string
+          rating: number
+        }
+        Insert: {
+          author_name: string
+          body: string
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          product_id: string
+          rating: number
+        }
+        Update: {
+          author_name?: string
+          body?: string
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          product_id?: string
+          rating?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          dimensions_cm: Json
+          featured: boolean
+          features: Json
+          gallery: Json
+          id: string
+          image_key: string
+          long_description: string
+          material: string | null
+          prep_days: number | null
+          price: number
+          sizes: Json
+          slug: string
+          sort_order: number
+          stock: number
+          title: string
+          updated_at: string
+          weight_grams: number | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description: string
+          dimensions_cm?: Json
+          featured?: boolean
+          features?: Json
+          gallery?: Json
+          id?: string
+          image_key: string
+          long_description?: string
+          material?: string | null
+          prep_days?: number | null
+          price: number
+          sizes?: Json
+          slug: string
+          sort_order?: number
+          stock?: number
+          title: string
+          updated_at?: string
+          weight_grams?: number | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          dimensions_cm?: Json
+          featured?: boolean
+          features?: Json
+          gallery?: Json
+          id?: string
+          image_key?: string
+          long_description?: string
+          material?: string | null
+          prep_days?: number | null
+          price?: number
+          sizes?: Json
+          slug?: string
+          sort_order?: number
+          stock?: number
+          title?: string
+          updated_at?: string
+          weight_grams?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

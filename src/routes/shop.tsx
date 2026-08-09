@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { ProductCard } from "@/components/site/ProductCard";
 import { categories } from "@/lib/products";
-import { getProducts } from "@/lib/products.api";
+import { productsQueryOptions } from "@/lib/catalog.functions";
+
 
 const searchSchema = z.object({
   category: z.enum(["trays", "clocks", "jewelry", "accessories", "custom"]).optional(),
@@ -11,10 +13,10 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute("/shop")({
   validateSearch: searchSchema,
+loader: ({ context }) => {
+    void context.queryClient.ensureQueryData(productsQueryOptions());
+  },
 
-  loader: async () => {
-    const products = await getProducts();
-    return { products };
   },
   head: () => ({
     meta: [
@@ -28,16 +30,23 @@ export const Route = createFileRoute("/shop")({
     ],
   }),
   component: ShopPage,
+  errorComponent: () => (
+    <div className="section-y mx-auto max-w-3xl px-5 text-center text-sm text-muted-foreground">
+      خطا در بارگذاری محصولات. لطفاً صفحه را دوباره بارگذاری کنید.
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="section-y mx-auto max-w-3xl px-5 text-center text-sm text-muted-foreground">
+      محصولی یافت نشد.
+    </div>
+  ),
 });
 
 function ShopPage() {
   const { category } = Route.useSearch();
-
-  const { products } = Route.useLoaderData();
-
-  const list = category
-    ? products.filter((p) => p.category === category)
-    : products;
+  const { data: products } = useSuspenseQuery(productsQueryOptions());
+  const list = category ? products.filter((p) => p.category === category) : products;
+  
   return (
     <section className="section-y mx-auto max-w-7xl px-5 md:px-8">
       <SectionHeading
