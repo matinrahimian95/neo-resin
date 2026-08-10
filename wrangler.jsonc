@@ -1,0 +1,26 @@
+{
+  "compatibility_date": "2026-08-10",
+  "main": ".output/server/index.mjs",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".output/public"
+  },
+  "name": "matinrahimian95-neo-resin",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "no_bundle": true,
+  "rules": [
+    {
+      "type": "ESModule",
+      "globs": [
+        "**/*.mjs",
+        "**/*.js"
+      ]
+    }
+  ],
+  "vars": {
+    "SUPABASE_URL": "https://cxaefgzhrffsdxlahoeq.supabase.co",
+    "SUPABASE_PUBLISHABLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4YWVmZ3pocmZmc2R4bGFob2VxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3MjY5NjYsImV4cCI6MjEwMTMwMjk2Nn0.96iU5IaQj4uIED2qZB_xG_Ea9NIGFWXbhg62Gf1QmZk"
+  }
+}
