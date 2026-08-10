@@ -46,10 +46,36 @@ function Admin() {
 
     const form = new FormData(e.currentTarget);
     const title = String(form.get("title") ?? "").trim();
+    const file = form.get("image_file") as File | null;
 
     if (!title) {
       toast.error("نام محصول را وارد کنید.");
       return;
+    }
+
+    setLoading(true);
+
+    let imageKey = "";
+
+    if (file && file.size > 0) {
+      const ext = file.name.split(".").pop();
+      const path = `${slugify(title)}-${Date.now()}.${ext}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("product-images")
+        .upload(path, file);
+
+      if (uploadError) {
+        setLoading(false);
+        toast.error("خطا در آپلود عکس: " + uploadError.message);
+        return;
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from("product-images")
+        .getPublicUrl(path);
+
+      imageKey = publicUrlData.publicUrl;
     }
 
     const product = {
@@ -60,13 +86,11 @@ function Admin() {
       long_description: String(form.get("description") ?? ""),
       category: String(form.get("category") ?? "trays"),
       stock: Number(form.get("stock")) || 0,
-      image_key: String(form.get("image_key") ?? ""),
+      image_key: imageKey,
       sort_order: 0,
       featured: false,
       published: true,
     };
-
-    setLoading(true);
 
     const { error } = await supabase.from("products").insert(product);
 
@@ -147,14 +171,17 @@ function Admin() {
           rows={4}
         />
 
-        <input
-          name="image_key"
-          placeholder="کلید تصویر (image_key)"
-          className="w-full border p-3 rounded"
-        />
-        <p className="text-xs text-muted-foreground -mt-3">
-          فعلاً آپلود مستقیم تصویر پشتیبانی نمی‌شود؛ این فیلد را بعداً هماهنگ می‌کنیم.
-        </p>
+        <div>
+          <label className="text-sm text-muted-foreground block mb-2">
+            عکس محصول
+          </label>
+          <input
+            name="image_file"
+            type="file"
+            accept="image/*"
+            className="w-full border p-3 rounded"
+          />
+        </div>
 
         <button
           type="submit"

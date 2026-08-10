@@ -21,7 +21,10 @@ export const imageMap: Record<string, string> = {
   artist: artistImg,
 };
 
-export const resolveImage = (key: string) => imageMap[key] ?? heroImg;
+export const resolveImage = (key: string) => {
+  if (key.startsWith("http://") || key.startsWith("https://")) return key;
+  return imageMap[key] ?? heroImg;
+};
 
 export type CategorySlug =
   | "trays"
