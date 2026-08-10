@@ -13,6 +13,8 @@ const categories = [
   { value: "jewelry", label: "زیورآلات" },
   { value: "accessories", label: "اکسسوری" },
   { value: "custom", label: "سفارش اختصاصی" },
+  { value: "containers", label: "ظروف رزینی" },
+  { value: "sweets", label: "شیرینی‌خوری" },
 ];
 
 function slugify(text: string) {

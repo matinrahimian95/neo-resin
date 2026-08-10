@@ -21,7 +21,14 @@ export const imageMap: Record<string, string> = {
 
 export const resolveImage = (key: string) => imageMap[key] ?? heroImg;
 
-export type CategorySlug = "trays" | "clocks" | "jewelry" | "accessories" | "custom";
+export type CategorySlug =
+  | "trays"
+  | "clocks"
+  | "jewelry"
+  | "accessories"
+  | "custom"
+  | "containers"
+  | "sweets";
 
 export type Category = {
   slug: CategorySlug;
@@ -41,6 +48,8 @@ export const categories: Category[] = [
     image: accessoriesImg,
   },
   { slug: "custom", title: "سفارش اختصاصی", caption: "اثری تنها برای شما", image: customImg },
+  { slug: "containers", title: "ظروف رزینی", caption: "ظرافتی برای هر سفره", image: trayImg },
+  { slug: "sweets", title: "شیرینی‌خوری", caption: "میزبانی با اصالت", image: trayImg },
 ];
 
 export type ProductSize = { label: string; multiplier: number };

@@ -8,7 +8,9 @@ import { productsQueryOptions } from "@/lib/catalog.functions";
 
 
 const searchSchema = z.object({
-  category: z.enum(["trays", "clocks", "jewelry", "accessories", "custom"]).optional(),
+  category: z
+    .enum(["trays", "clocks", "jewelry", "accessories", "custom", "containers", "sweets"])
+    .optional(),
 });
 
 export const Route = createFileRoute("/shop")({
