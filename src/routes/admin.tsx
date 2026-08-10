@@ -59,8 +59,8 @@ function Admin() {
 
     if (file && file.size > 0) {
       const ext = file.name.split(".").pop();
-      const path = `${slugify(title)}-${Date.now()}.${ext}`;
-
+      const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      
       const { error: uploadError } = await supabase.storage
         .from("product-images")
         .upload(path, file);
