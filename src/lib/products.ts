@@ -3,6 +3,8 @@ import clockImg from "@/assets/cat-clock.jpg";
 import jewelryImg from "@/assets/cat-jewelry.jpg";
 import accessoriesImg from "@/assets/cat-accessories.jpg";
 import customImg from "@/assets/cat-custom.jpg";
+import containersImg from "@/assets/cat-containers.jpg";
+import sweetsImg from "@/assets/cat-sweets.jpg";
 import heroImg from "@/assets/hero.jpg";
 import textureImg from "@/assets/texture.jpg";
 import artistImg from "@/assets/artist.jpg";
@@ -48,8 +50,8 @@ export const categories: Category[] = [
     image: accessoriesImg,
   },
   { slug: "custom", title: "سفارش اختصاصی", caption: "اثری تنها برای شما", image: customImg },
-  { slug: "containers", title: "ظروف رزینی", caption: "ظرافتی برای هر سفره", image: trayImg },
-  { slug: "sweets", title: "شیرینی‌خوری", caption: "میزبانی با اصالت", image: trayImg },
+  { slug: "containers", title: "ظروف رزینی", caption: "ظرافتی برای هر سفره", image: containersImg },
+  { slug: "sweets", title: "شیرینی‌خوری", caption: "میزبانی با اصالت", image: sweetsImg },
 ];
 
 export type ProductSize = { label: string; multiplier: number };
