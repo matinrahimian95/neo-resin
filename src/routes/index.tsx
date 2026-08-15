@@ -19,7 +19,7 @@ import textureImg from "@/assets/texture.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "20826968" },
+      { title: "نئو رزین | هنر رزین دست‌ساز" },
       {
         name: "description",
         content:
