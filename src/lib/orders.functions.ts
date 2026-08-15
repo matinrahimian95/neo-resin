@@ -82,7 +82,7 @@ export const verifyOnlinePayment = createServerFn({ method: "POST" })
 
     const { data: order } = await supabaseAdmin
       .from("orders")
-      .select("id, order_number, amount, payment_status, gateway_ref_id")
+      .select("id, order_number, amount, payment_status, gateway_ref_id, items")
       .eq("gateway_authority", data.authority)
       .maybeSingle();
     if (!order) throw new Error("سفارش مرتبط با این تراکنش پیدا نشد.");
@@ -116,7 +116,19 @@ export const verifyOnlinePayment = createServerFn({ method: "POST" })
         gateway_ref_id: result.refId ?? null,
       })
       .eq("id", order.id);
-
+if (result.ok) {
+  const items = order.items as { id: string; qty: number }[];
+  for (const item of items) {
+    const { error: stockError } = await supabaseAdmin.rpc("decrement_stock", {
+      product_id: item.id,
+      qty: item.qty,
+    });
+    if (stockError) {
+      console.error("[stock] decrement failed", item.id, stockError.message);
+      // عمداً throw نمی‌کنیم؛ پرداخت موفق بوده و نباید fail نشون بدیم به کاربر
+    }
+  }
+}
     return {
       ok: result.ok,
       orderNumber: order.order_number,
