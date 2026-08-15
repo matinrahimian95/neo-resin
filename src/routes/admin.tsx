@@ -1,5 +1,4 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { createFileRoute, useNavigate, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -28,6 +27,8 @@ function slugify(text: string) {
 
 function Admin() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isExactAdminPage = location.pathname === "/admin";
   const [loading, setLoading] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
@@ -117,6 +118,10 @@ function Admin() {
         در حال بررسی ورود...
       </div>
     );
+  }
+  
+if (!isExactAdminPage) {
+    return <Outlet />;
   }
 
   return (
