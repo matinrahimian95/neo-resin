@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { createFileRoute, useNavigate, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -119,7 +120,7 @@ function Admin() {
       </div>
     );
   }
-  
+
 if (!isExactAdminPage) {
     return <Outlet />;
   }
