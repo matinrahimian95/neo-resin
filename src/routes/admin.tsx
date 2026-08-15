@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -122,7 +122,12 @@ function Admin() {
   return (
     <div className="max-w-3xl mx-auto p-10">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold">مدیریت محصولات</h1>
+        <div>
+  <h1 className="text-3xl font-bold">مدیریت محصولات</h1>
+  <Link to="/admin/orders" className="text-sm text-gold hover:underline">
+    مشاهده سفارش‌ها
+  </Link>
+</div>
         <button
           type="button"
           onClick={handleLogout}
