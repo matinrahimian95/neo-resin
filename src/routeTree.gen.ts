@@ -19,6 +19,7 @@ import { Route as CustomOrdersRouteImport } from './routes/custom-orders'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as AccountLoginRouteImport } from './routes/account.login'
 import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
 import { Route as PaymentCallbackRouteImport } from './routes/payment.callback'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
@@ -73,6 +74,11 @@ const ShopRoute = ShopRouteImport.update({
   path: '/shop',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountLoginRoute = AccountLoginRouteImport.update({
+  id: '/account/login',
+  path: '/account/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminOrdersRoute = AdminOrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
   '/shop': typeof ShopRoute
+  '/account/login': typeof AccountLoginRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
   '/shop': typeof ShopRoute
+  '/account/login': typeof AccountLoginRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/login': typeof LoginRoute
   '/shop': typeof ShopRoute
+  '/account/login': typeof AccountLoginRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/login'
     | '/shop'
+    | '/account/login'
     | '/admin/orders'
     | '/payment/callback'
     | '/product/$id'
@@ -163,6 +173,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/login'
     | '/shop'
+    | '/account/login'
     | '/admin/orders'
     | '/payment/callback'
     | '/product/$id'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/login'
     | '/shop'
+    | '/account/login'
     | '/admin/orders'
     | '/payment/callback'
     | '/product/$id'
@@ -194,6 +206,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   LoginRoute: typeof LoginRoute
   ShopRoute: typeof ShopRoute
+  AccountLoginRoute: typeof AccountLoginRoute
   PaymentCallbackRoute: typeof PaymentCallbackRoute
   ProductIdRoute: typeof ProductIdRoute
 }
@@ -270,6 +283,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account/login': {
+      id: '/account/login'
+      path: '/account/login'
+      fullPath: '/account/login'
+      preLoaderRoute: typeof AccountLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/orders': {
       id: '/admin/orders'
       path: '/orders'
@@ -315,6 +335,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   LoginRoute: LoginRoute,
   ShopRoute: ShopRoute,
+  AccountLoginRoute: AccountLoginRoute,
   PaymentCallbackRoute: PaymentCallbackRoute,
   ProductIdRoute: ProductIdRoute,
 }
