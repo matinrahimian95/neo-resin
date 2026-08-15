@@ -79,3 +79,26 @@ export const logoutCustomer = createServerFn({ method: "POST" }).handler(async (
   setResponseHeader("Set-Cookie", "customer_session=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0");
   return { ok: true };
 });
+export const getMyOrders = createServerFn({ method: "GET" }).handler(async () => {
+  const { getCurrentCustomerId } = await import("./customers.server");
+  const customerId = await getCurrentCustomerId();
+  if (!customerId) throw new Error("لطفاً ابتدا وارد شوید.");
+
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+  const { data: customer } = await supabaseAdmin
+    .from("customers")
+    .select("phone")
+    .eq("id", customerId)
+    .maybeSingle();
+  if (!customer) throw new Error("حساب کاربری پیدا نشد.");
+
+  const { data: orders, error } = await supabaseAdmin
+    .from("orders")
+    .select("id, order_number, amount, items, payment_status, shipping_status, created_at")
+    .eq("phone", customer.phone)
+    .order("created_at", { ascending: false });
+  if (error) throw new Error("خطا در دریافت سفارش‌ها.");
+
+  return { orders: orders ?? [] };
+});

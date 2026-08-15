@@ -20,6 +20,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as AccountLoginRouteImport } from './routes/account.login'
+import { Route as AccountOrdersRouteImport } from './routes/account.orders'
 import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
 import { Route as PaymentCallbackRouteImport } from './routes/payment.callback'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
@@ -79,6 +80,11 @@ const AccountLoginRoute = AccountLoginRouteImport.update({
   path: '/account/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountOrdersRoute = AccountOrdersRouteImport.update({
+  id: '/account/orders',
+  path: '/account/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminOrdersRoute = AdminOrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/shop': typeof ShopRoute
   '/account/login': typeof AccountLoginRoute
+  '/account/orders': typeof AccountOrdersRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/shop': typeof ShopRoute
   '/account/login': typeof AccountLoginRoute
+  '/account/orders': typeof AccountOrdersRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/shop': typeof ShopRoute
   '/account/login': typeof AccountLoginRoute
+  '/account/orders': typeof AccountOrdersRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/shop'
     | '/account/login'
+    | '/account/orders'
     | '/admin/orders'
     | '/payment/callback'
     | '/product/$id'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/shop'
     | '/account/login'
+    | '/account/orders'
     | '/admin/orders'
     | '/payment/callback'
     | '/product/$id'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/shop'
     | '/account/login'
+    | '/account/orders'
     | '/admin/orders'
     | '/payment/callback'
     | '/product/$id'
@@ -207,6 +219,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ShopRoute: typeof ShopRoute
   AccountLoginRoute: typeof AccountLoginRoute
+  AccountOrdersRoute: typeof AccountOrdersRoute
   PaymentCallbackRoute: typeof PaymentCallbackRoute
   ProductIdRoute: typeof ProductIdRoute
 }
@@ -290,6 +303,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account/orders': {
+      id: '/account/orders'
+      path: '/account/orders'
+      fullPath: '/account/orders'
+      preLoaderRoute: typeof AccountOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/orders': {
       id: '/admin/orders'
       path: '/orders'
@@ -336,6 +356,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ShopRoute: ShopRoute,
   AccountLoginRoute: AccountLoginRoute,
+  AccountOrdersRoute: AccountOrdersRoute,
   PaymentCallbackRoute: PaymentCallbackRoute,
   ProductIdRoute: ProductIdRoute,
 }
