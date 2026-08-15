@@ -198,15 +198,14 @@ function AdminOrders() {
                         <span className="text-muted-foreground">شماره پیگیری کارت‌به‌کارت: </span>
                         {order.card_tracking_number}
                       </p>
-                      {receiptUrls[order.id] ? (
-                        
-                          href={receiptUrls[order.id]}
-                          target="_blank"
-                          rel="noreferrer"
+{receiptUrls[order.id] ? (
+                        <button
+                          type="button"
+                          onClick={() => window.open(receiptUrls[order.id], "_blank")}
                           className="text-gold underline"
                         >
                           مشاهده تصویر رسید
-                        </a>
+                        </button>
                       ) : (
                         <p className="text-muted-foreground">در حال بارگذاری رسید...</p>
                       )}
