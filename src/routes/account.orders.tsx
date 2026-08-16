@@ -1,7 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { getMyOrders, logoutCustomer } from "@/lib/customers.functions";
-import { getMyCustomOrders } from "@/lib/custom-orders.functions";
+import { getMyCustomOrders, respondToQuote } from "@/lib/custom-orders.functions";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/account/orders")({
   component: AccountOrders,
@@ -57,6 +58,7 @@ function AccountOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [customOrders, setCustomOrders] = useState<CustomOrder[]>([]);
   const [loading, setLoading] = useState(true);
+  const [noteInputs, setNoteInputs] = useState<Record<string, string>>({});
 
   useEffect(() => {
     Promise.all([getMyOrders(), getMyCustomOrders()])
@@ -73,6 +75,18 @@ function AccountOrders() {
   async function handleLogout() {
     await logoutCustomer();
     navigate({ to: "/account/login" });
+  }
+
+  async function respond(id: string, response: "accepted" | "rejected") {
+    try {
+      await respondToQuote({ data: { id, response, note: noteInputs[id] } });
+      setCustomOrders((prev) =>
+        prev.map((co) => (co.id === id ? { ...co, status: response } : co)),
+      );
+      toast.success(response === "accepted" ? "درخواست شما تایید شد" : "پاسخ شما ثبت شد");
+    } catch {
+      toast.error("خطا در ثبت پاسخ");
+    }
   }
 
   if (loading) {
@@ -134,6 +148,34 @@ function AccountOrders() {
                 <p className="text-sm mt-2">
                   قیمت پیشنهادی: {co.quoted_price.toLocaleString("fa-IR")} تومان
                 </p>
+              )}
+
+              {co.status === "quoted" && (
+                <div className="mt-3 space-y-2">
+                  <textarea
+                    placeholder="نظر یا توضیح (اختیاری)"
+                    value={noteInputs[co.id] ?? ""}
+                    onChange={(e) =>
+                      setNoteInputs((prev) => ({ ...prev, [co.id]: e.target.value }))
+                    }
+                    className="w-full border rounded p-2 text-sm"
+                    rows={2}
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => void respond(co.id, "accepted")}
+                      className="bg-black text-white px-4 py-2 rounded text-sm"
+                    >
+                      قبول دارم
+                    </button>
+                    <button
+                      onClick={() => void respond(co.id, "rejected")}
+                      className="border px-4 py-2 rounded text-sm"
+                    >
+                      قبول ندارم
+                    </button>
+                  </div>
+                </div>
               )}
             </div>
           ))}
