@@ -55,4 +55,26 @@ export const updateCustomOrder = createServerFn({ method: "POST" })
     if (error) throw new Error("بروزرسانی ناموفق بود.");
     return { ok: true };
   });
-  
+  export const getMyCustomOrders = createServerFn({ method: "GET" }).handler(async () => {
+  const { getCurrentCustomerId } = await import("./customers.server");
+  const customerId = await getCurrentCustomerId();
+  if (!customerId) throw new Error("لطفاً ابتدا وارد شوید.");
+
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+  const { data: customer } = await supabaseAdmin
+    .from("customers")
+    .select("phone")
+    .eq("id", customerId)
+    .maybeSingle();
+  if (!customer) throw new Error("حساب کاربری پیدا نشد.");
+
+  const { data: customOrders, error } = await supabaseAdmin
+    .from("custom_orders")
+    .select("id, item_type, size, idea_description, status, quoted_price, created_at")
+    .eq("phone", customer.phone)
+    .order("created_at", { ascending: false });
+  if (error) throw new Error("خطا در دریافت سفارش‌های اختصاصی.");
+
+  return { customOrders: customOrders ?? [] };
+});

@@ -1,7 +1,7 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { getMyOrders, logoutCustomer } from "@/lib/customers.functions";
+import { getMyCustomOrders } from "@/lib/custom-orders.functions";
 
 export const Route = createFileRoute("/account/orders")({
   component: AccountOrders,
@@ -25,6 +25,13 @@ function getStageLabel(paymentStatus: string, shippingStatus: string) {
   return STAGE_LABELS.preparing;
 }
 
+const CUSTOM_STATUS_LABELS: Record<string, string> = {
+  new: "در حال بررسی",
+  quoted: "قیمت اعلام شد",
+  accepted: "پذیرفته شد",
+  rejected: "رد شد",
+};
+
 type Order = {
   id: string;
   order_number: string;
@@ -35,14 +42,28 @@ type Order = {
   created_at: string;
 };
 
+type CustomOrder = {
+  id: string;
+  item_type: string;
+  size: string | null;
+  idea_description: string;
+  status: string;
+  quoted_price: number | null;
+  created_at: string;
+};
+
 function AccountOrders() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
+  const [customOrders, setCustomOrders] = useState<CustomOrder[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getMyOrders()
-      .then((res) => setOrders(res.orders as Order[]))
+    Promise.all([getMyOrders(), getMyCustomOrders()])
+      .then(([ordersRes, customRes]) => {
+        setOrders(ordersRes.orders as Order[]);
+        setCustomOrders(customRes.customOrders as CustomOrder[]);
+      })
       .catch(() => {
         navigate({ to: "/account/login" });
       })
@@ -65,16 +86,17 @@ function AccountOrders() {
   return (
     <div className="max-w-3xl mx-auto p-10">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold">سفارش‌های من</h1>
+        <h1 className="text-2xl font-bold">حساب کاربری من</h1>
         <button onClick={handleLogout} className="text-sm text-muted-foreground hover:text-destructive">
           خروج
         </button>
       </div>
 
+      <h2 className="text-lg font-bold mb-4">سفارش‌های من</h2>
       {orders.length === 0 ? (
-        <p className="text-center text-muted-foreground">هنوز سفارشی ثبت نکرده‌اید.</p>
+        <p className="text-muted-foreground mb-8">هنوز سفارشی ثبت نکرده‌اید.</p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 mb-10">
           {orders.map((order) => (
             <div key={order.id} className="border rounded p-4">
               <div className="flex items-center justify-between">
@@ -87,6 +109,32 @@ function AccountOrders() {
               <p className="text-sm mt-2 text-gold">
                 {getStageLabel(order.payment_status, order.shipping_status)}
               </p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <h2 className="text-lg font-bold mb-4">سفارش‌های اختصاصی من</h2>
+      {customOrders.length === 0 ? (
+        <p className="text-muted-foreground">هنوز درخواست سفارش اختصاصی ثبت نکرده‌اید.</p>
+      ) : (
+        <div className="space-y-4">
+          {customOrders.map((co) => (
+            <div key={co.id} className="border rounded p-4">
+              <div className="flex items-center justify-between">
+                <p className="font-bold">{co.item_type}</p>
+                <span className="text-sm text-gold">
+                  {CUSTOM_STATUS_LABELS[co.status] ?? co.status}
+                </span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {new Date(co.created_at).toLocaleString("fa-IR")}
+              </p>
+              {co.quoted_price && (
+                <p className="text-sm mt-2">
+                  قیمت پیشنهادی: {co.quoted_price.toLocaleString("fa-IR")} تومان
+                </p>
+              )}
             </div>
           ))}
         </div>
