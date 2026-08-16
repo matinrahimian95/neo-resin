@@ -126,11 +126,16 @@ function AdminOrders() {
   return (
     <div className="max-w-5xl mx-auto p-10">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold">مدیریت سفارش‌ها</h1>
-        <Link to="/admin" className="text-sm text-muted-foreground hover:text-gold">
-          مدیریت محصولات
-        </Link>
-      </div>
+  <h1 className="text-3xl font-bold">مدیریت سفارش‌ها</h1>
+  <div className="flex items-center gap-4">
+    <Link to="/admin/custom-orders" className="text-sm text-muted-foreground hover:text-gold">
+      سفارش‌های اختصاصی
+    </Link>
+    <Link to="/admin" className="text-sm text-muted-foreground hover:text-gold">
+      مدیریت محصولات
+    </Link>
+  </div>
+</div>
 
       {loading ? (
         <p className="text-center text-muted-foreground">در حال بارگذاری...</p>
