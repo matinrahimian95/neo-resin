@@ -33,6 +33,26 @@ const CUSTOM_STATUS_LABELS: Record<string, string> = {
   rejected: "رد شد",
 };
 
+const CUSTOM_PAYMENT_LABELS: Record<string, string> = {
+  awaiting_payment: "در انتظار پرداخت",
+  awaiting_verification: "در انتظار تأیید پرداخت",
+  paid: "پرداخت موفق",
+  failed: "پرداخت ناموفق / رسید رد شد",
+};
+
+const CUSTOM_PRODUCTION_LABELS: Record<string, string> = {
+  in_production: "در حال ساخت",
+  shipped: "ارسال شد",
+  delivered: "تحویل داده شد",
+};
+
+function getCustomOrderStageLabel(co: CustomOrder) {
+  if (co.status !== "accepted") return CUSTOM_STATUS_LABELS[co.status] ?? co.status;
+  if (co.production_status) return CUSTOM_PRODUCTION_LABELS[co.production_status] ?? co.production_status;
+  if (co.payment_status) return CUSTOM_PAYMENT_LABELS[co.payment_status] ?? co.payment_status;
+  return CUSTOM_STATUS_LABELS.accepted;
+}
+
 type Order = {
   id: string;
   order_number: string;
@@ -51,6 +71,8 @@ type CustomOrder = {
   status: string;
   quoted_price: number | null;
   created_at: string;
+  payment_status?: string;
+  production_status?: string | null;
 };
 
 function AccountOrders() {
@@ -143,7 +165,7 @@ function AccountOrders() {
               <div className="flex items-center justify-between">
                 <p className="font-bold">{co.item_type}</p>
                 <span className="text-sm text-gold">
-                  {CUSTOM_STATUS_LABELS[co.status] ?? co.status}
+                  {getCustomOrderStageLabel(co)}
                 </span>
               </div>
               <p className="text-xs text-muted-foreground mt-1">
