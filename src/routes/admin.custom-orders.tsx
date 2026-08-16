@@ -128,6 +128,21 @@ function AdminCustomOrders() {
     toast.success("پرداخت تأیید شد");
   }
 
+  async function rejectCardPayment(id: string) {
+    const { error } = await supabase
+      .from("custom_orders")
+      .update({ payment_status: "failed" })
+      .eq("id", id);
+    if (error) {
+      toast.error("خطا: " + error.message);
+      return;
+    }
+    setOrders((prev) =>
+      prev.map((o) => (o.id === id ? { ...o, payment_status: "failed" } : o)),
+    );
+    toast.success("رسید رد شد");
+  }
+
   async function updateProductionStatus(id: string, status: string) {
     const { error } = await supabase
       .from("custom_orders")
@@ -258,12 +273,20 @@ function AdminCustomOrders() {
 
                       {order.payment_method === "card_transfer" &&
                         order.payment_status === "awaiting_verification" && (
-                          <button
-                            onClick={() => void confirmCardPayment(order.id)}
-                            className="bg-black text-white px-4 py-2 rounded text-sm"
-                          >
-                            تأیید پرداخت کارت‌به‌کارت
-                          </button>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => void confirmCardPayment(order.id)}
+                              className="bg-black text-white px-4 py-2 rounded text-sm"
+                            >
+                              تأیید پرداخت کارت‌به‌کارت
+                            </button>
+                            <button
+                              onClick={() => void rejectCardPayment(order.id)}
+                              className="border border-red-500 text-red-500 px-4 py-2 rounded text-sm"
+                            >
+                              رد رسید
+                            </button>
+                          </div>
                         )}
 
                       {order.payment_status === "paid" && (
