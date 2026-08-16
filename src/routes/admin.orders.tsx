@@ -213,20 +213,30 @@ function AdminOrders() {
                   )}
 
                   <div className="flex items-center gap-2">
-                    <span className="text-muted-foreground">وضعیت ارسال: </span>
-                    <select
-                      value={order.shipping_status}
-                      onClick={(e) => e.stopPropagation()}
-                      onChange={(e) => void updateShippingStatus(order.id, e.target.value)}
-                      className="border rounded p-1"
-                    >
-                      {Object.entries(SHIPPING_LABELS).map(([value, label]) => (
-                        <option key={value} value={value}>
-                          {label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+  <span className="text-muted-foreground">وضعیت ارسال: </span>
+  <select
+    value={order.shipping_status}
+    disabled={
+      order.payment_method === "card_transfer" &&
+      order.payment_status === "awaiting_verification"
+    }
+    onClick={(e) => e.stopPropagation()}
+    onChange={(e) => void updateShippingStatus(order.id, e.target.value)}
+    className="border rounded p-1 disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    {Object.entries(SHIPPING_LABELS).map(([value, label]) => (
+      <option key={value} value={value}>
+        {label}
+      </option>
+    ))}
+  </select>
+  {order.payment_method === "card_transfer" &&
+    order.payment_status === "awaiting_verification" && (
+      <span className="text-xs text-muted-foreground">
+        (ابتدا پرداخت را تأیید کنید)
+      </span>
+    )}
+</div>
 
                   {order.payment_method === "card_transfer" &&
                     order.payment_status === "awaiting_verification" && (
