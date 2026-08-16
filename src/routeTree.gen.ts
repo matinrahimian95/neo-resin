@@ -23,6 +23,8 @@ import { Route as AccountLoginRouteImport } from './routes/account.login'
 import { Route as AccountOrdersRouteImport } from './routes/account.orders'
 import { Route as AdminCustomOrdersRouteImport } from './routes/admin.custom-orders'
 import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
+import { Route as CustomPaymentIdRouteImport } from './routes/custom-payment.$id'
+import { Route as CustomPaymentCallbackRouteImport } from './routes/custom-payment.callback'
 import { Route as PaymentCallbackRouteImport } from './routes/payment.callback'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 
@@ -96,6 +98,16 @@ const AdminOrdersRoute = AdminOrdersRouteImport.update({
   path: '/orders',
   getParentRoute: () => AdminRoute,
 } as any)
+const CustomPaymentIdRoute = CustomPaymentIdRouteImport.update({
+  id: '/custom-payment/$id',
+  path: '/custom-payment/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomPaymentCallbackRoute = CustomPaymentCallbackRouteImport.update({
+  id: '/custom-payment/callback',
+  path: '/custom-payment/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PaymentCallbackRoute = PaymentCallbackRouteImport.update({
   id: '/payment/callback',
   path: '/payment/callback',
@@ -122,6 +134,8 @@ export interface FileRoutesByFullPath {
   '/account/orders': typeof AccountOrdersRoute
   '/admin/custom-orders': typeof AdminCustomOrdersRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/custom-payment/$id': typeof CustomPaymentIdRoute
+  '/custom-payment/callback': typeof CustomPaymentCallbackRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -140,6 +154,8 @@ export interface FileRoutesByTo {
   '/account/orders': typeof AccountOrdersRoute
   '/admin/custom-orders': typeof AdminCustomOrdersRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/custom-payment/$id': typeof CustomPaymentIdRoute
+  '/custom-payment/callback': typeof CustomPaymentCallbackRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -159,6 +175,8 @@ export interface FileRoutesById {
   '/account/orders': typeof AccountOrdersRoute
   '/admin/custom-orders': typeof AdminCustomOrdersRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/custom-payment/$id': typeof CustomPaymentIdRoute
+  '/custom-payment/callback': typeof CustomPaymentCallbackRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -179,6 +197,8 @@ export interface FileRouteTypes {
     | '/account/orders'
     | '/admin/custom-orders'
     | '/admin/orders'
+    | '/custom-payment/$id'
+    | '/custom-payment/callback'
     | '/payment/callback'
     | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -197,6 +217,8 @@ export interface FileRouteTypes {
     | '/account/orders'
     | '/admin/custom-orders'
     | '/admin/orders'
+    | '/custom-payment/$id'
+    | '/custom-payment/callback'
     | '/payment/callback'
     | '/product/$id'
   id:
@@ -215,6 +237,8 @@ export interface FileRouteTypes {
     | '/account/orders'
     | '/admin/custom-orders'
     | '/admin/orders'
+    | '/custom-payment/$id'
+    | '/custom-payment/callback'
     | '/payment/callback'
     | '/product/$id'
   fileRoutesById: FileRoutesById
@@ -232,6 +256,8 @@ export interface RootRouteChildren {
   ShopRoute: typeof ShopRoute
   AccountLoginRoute: typeof AccountLoginRoute
   AccountOrdersRoute: typeof AccountOrdersRoute
+  CustomPaymentIdRoute: typeof CustomPaymentIdRoute
+  CustomPaymentCallbackRoute: typeof CustomPaymentCallbackRoute
   PaymentCallbackRoute: typeof PaymentCallbackRoute
   ProductIdRoute: typeof ProductIdRoute
 }
@@ -336,6 +362,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminOrdersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/custom-payment/$id': {
+      id: '/custom-payment/$id'
+      path: '/custom-payment/$id'
+      fullPath: '/custom-payment/$id'
+      preLoaderRoute: typeof CustomPaymentIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/custom-payment/callback': {
+      id: '/custom-payment/callback'
+      path: '/custom-payment/callback'
+      fullPath: '/custom-payment/callback'
+      preLoaderRoute: typeof CustomPaymentCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/payment/callback': {
       id: '/payment/callback'
       path: '/payment/callback'
@@ -378,6 +418,8 @@ const rootRouteChildren: RootRouteChildren = {
   ShopRoute: ShopRoute,
   AccountLoginRoute: AccountLoginRoute,
   AccountOrdersRoute: AccountOrdersRoute,
+  CustomPaymentIdRoute: CustomPaymentIdRoute,
+  CustomPaymentCallbackRoute: CustomPaymentCallbackRoute,
   PaymentCallbackRoute: PaymentCallbackRoute,
   ProductIdRoute: ProductIdRoute,
 }

@@ -83,7 +83,12 @@ function AccountOrders() {
       setCustomOrders((prev) =>
         prev.map((co) => (co.id === id ? { ...co, status: response } : co)),
       );
-      toast.success(response === "accepted" ? "درخواست شما تایید شد" : "پاسخ شما ثبت شد");
+      if (response === "accepted") {
+        toast.success("درخواست شما تایید شد");
+        navigate({ to: "/custom-payment/$id", params: { id } });
+      } else {
+        toast.success("پاسخ شما ثبت شد");
+      }
     } catch {
       toast.error("خطا در ثبت پاسخ");
     }
