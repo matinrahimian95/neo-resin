@@ -25,6 +25,7 @@ type CustomOrder = {
   status: string;
   quoted_price: number | null;
   admin_note: string | null;
+  customer_note: string | null;
   created_at: string;
 };
 
@@ -133,6 +134,12 @@ function AdminCustomOrders() {
                   <p><span className="text-muted-foreground">توضیح ایده: </span>{order.idea_description}</p>
                   {order.quoted_price && (
                     <p><span className="text-muted-foreground">قیمت اعلام‌شده: </span>{order.quoted_price.toLocaleString("fa-IR")} تومان</p>
+                  )}
+                  {order.customer_note && (
+                    <p className="bg-muted/40 rounded p-2">
+                      <span className="text-muted-foreground">نظر مشتری: </span>
+                      {order.customer_note}
+                    </p>
                   )}
 
                   <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>

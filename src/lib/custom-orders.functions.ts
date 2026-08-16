@@ -78,3 +78,37 @@ export const updateCustomOrder = createServerFn({ method: "POST" })
 
   return { customOrders: customOrders ?? [] };
 });
+const respondSchema = z.object({
+  id: z.string(),
+  response: z.enum(["accepted", "rejected"]),
+  note: z.string().optional(),
+});
+
+export const respondToQuote = createServerFn({ method: "POST" })
+  .inputValidator((data: unknown) => respondSchema.parse(data))
+  .handler(async ({ data }) => {
+    const { getCurrentCustomerId } = await import("./customers.server");
+    const customerId = await getCurrentCustomerId();
+    if (!customerId) throw new Error("لطفاً ابتدا وارد شوید.");
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    const { data: customer } = await supabaseAdmin
+      .from("customers")
+      .select("phone")
+      .eq("id", customerId)
+      .maybeSingle();
+    if (!customer) throw new Error("حساب کاربری پیدا نشد.");
+
+    const patch: Record<string, unknown> = { status: data.response };
+    if (data.note) patch.customer_note = data.note;
+
+    const { error } = await supabaseAdmin
+      .from("custom_orders")
+      .update(patch)
+      .eq("id", data.id)
+      .eq("phone", customer.phone);
+    if (error) throw new Error("ثبت پاسخ ناموفق بود.");
+
+    return { ok: true };
+  });
