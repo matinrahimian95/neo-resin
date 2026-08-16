@@ -21,6 +21,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as AccountLoginRouteImport } from './routes/account.login'
 import { Route as AccountOrdersRouteImport } from './routes/account.orders'
+import { Route as AdminCustomOrdersRouteImport } from './routes/admin.custom-orders'
 import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
 import { Route as PaymentCallbackRouteImport } from './routes/payment.callback'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
@@ -85,6 +86,11 @@ const AccountOrdersRoute = AccountOrdersRouteImport.update({
   path: '/account/orders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminCustomOrdersRoute = AdminCustomOrdersRouteImport.update({
+  id: '/custom-orders',
+  path: '/custom-orders',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminOrdersRoute = AdminOrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/shop': typeof ShopRoute
   '/account/login': typeof AccountLoginRoute
   '/account/orders': typeof AccountOrdersRoute
+  '/admin/custom-orders': typeof AdminCustomOrdersRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByTo {
   '/shop': typeof ShopRoute
   '/account/login': typeof AccountLoginRoute
   '/account/orders': typeof AccountOrdersRoute
+  '/admin/custom-orders': typeof AdminCustomOrdersRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -149,6 +157,7 @@ export interface FileRoutesById {
   '/shop': typeof ShopRoute
   '/account/login': typeof AccountLoginRoute
   '/account/orders': typeof AccountOrdersRoute
+  '/admin/custom-orders': typeof AdminCustomOrdersRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/product/$id': typeof ProductIdRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/account/login'
     | '/account/orders'
+    | '/admin/custom-orders'
     | '/admin/orders'
     | '/payment/callback'
     | '/product/$id'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/account/login'
     | '/account/orders'
+    | '/admin/custom-orders'
     | '/admin/orders'
     | '/payment/callback'
     | '/product/$id'
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/account/login'
     | '/account/orders'
+    | '/admin/custom-orders'
     | '/admin/orders'
     | '/payment/callback'
     | '/product/$id'
@@ -310,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountOrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/custom-orders': {
+      id: '/admin/custom-orders'
+      path: '/custom-orders'
+      fullPath: '/admin/custom-orders'
+      preLoaderRoute: typeof AdminCustomOrdersRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/orders': {
       id: '/admin/orders'
       path: '/orders'
@@ -335,10 +354,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminCustomOrdersRoute: typeof AdminCustomOrdersRoute
   AdminOrdersRoute: typeof AdminOrdersRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminCustomOrdersRoute: AdminCustomOrdersRoute,
   AdminOrdersRoute: AdminOrdersRoute,
 }
 
