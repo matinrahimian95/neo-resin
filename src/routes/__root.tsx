@@ -88,11 +88,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "بوتیک آنلاین نئو رزین؛ سینی، ساعت، زیورآلات و اکسسوری رزین دست‌ساز با طراحی لوکس سیاه و طلایی و امکان سفارش اختصاصی." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "نئو رزین | هنر رزین دست‌ساز" },
       { name: "twitter:description", content: "بوتیک آنلاین نئو رزین؛ سینی، ساعت، زیورآلات و اکسسوری رزین دست‌ساز با طراحی لوکس سیاه و طلایی و امکان سفارش اختصاصی." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/18a938e9-d18c-43ce-8ba0-7c6662a0b560/id-preview-a2485860--fd4b38f2-65dc-4c4d-82e6-367259c0679f.lovable.app-1785497646445.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/18a938e9-d18c-43ce-8ba0-7c6662a0b560/id-preview-a2485860--fd4b38f2-65dc-4c4d-82e6-367259c0679f.lovable.app-1785497646445.png" },
+      { property: "og:image", content: "https://neo-resin.ir/og-image.png" },
+{ name: "twitter:image", content: "https://neo-resin.ir/og-image.png" },
     ],
     links: [
       {
@@ -104,7 +103,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
     ],
   }),
   shellComponent: RootShell,
