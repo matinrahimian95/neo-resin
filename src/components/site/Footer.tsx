@@ -46,13 +46,7 @@ export function Footer() {
           <ul className="space-y-3 text-muted-foreground">
             <li className="flex items-center gap-2">
               <Instagram className="size-4 shrink-0 text-gold" />
-              <a
-                href="https://instagram.com/neo_resin_"
-                target="_blank"
-                rel="noopener noreferrer"
-                dir="ltr"
-                className="transition-colors hover:text-gold"
-              >
+              <a href="https://instagram.com/neo_resin_" target="_blank" rel="noopener noreferrer" dir="ltr" className="transition-colors hover:text-gold">
                 @neo_resin_
               </a>
             </li>
@@ -64,27 +58,23 @@ export function Footer() {
             </li>
             <li className="flex items-center gap-2">
               <Phone className="size-4 shrink-0 text-gold" />
-              <a
-                href="https://wa.me/989370956690"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors hover:text-gold"
-              >
+              <a href="https://wa.me/989370956690" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold">
                 واتساپ
               </a>
             </li>
             <li className="flex items-center gap-2">
               <Mail className="size-4 shrink-0 text-gold" />
-              <a
-                href="mailto:matinrahimian95@gmail.com"
-                dir="ltr"
-                className="transition-colors hover:text-gold"
-              >
+              <a href="mailto:matinrahimian95@gmail.com" dir="ltr" className="transition-colors hover:text-gold">
                 matinrahimian95@gmail.com
               </a>
             </li>
           </ul>
         </div>
+      </div>
+      <div className="flex justify-center border-t border-border/50 px-5 py-6">
+        <a referrerPolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=7126126&Code=pGasOJLeXL3u8fyAHiP6uADU7qPBmBmo">
+          <img referrerPolicy="origin" src="https://trustseal.enamad.ir/logo.aspx?id=7126126&Code=pGasOJLeXL3u8fyAHiP6uADU7qPBmBmo" alt="نماد اعتماد الکترونیکی" style={{ cursor: "pointer" }} />
+        </a>
       </div>
       <div className="border-t border-border/50 px-5 py-5 text-center text-xs text-muted-foreground">
         © {new Date().getFullYear()} Neo_resin — تمامی حقوق محفوظ است.
