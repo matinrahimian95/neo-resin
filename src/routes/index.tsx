@@ -122,8 +122,8 @@ function Index() {
                 className="absolute inset-0 -z-10 size-full object-cover opacity-60 transition-all duration-[1200ms] group-hover:scale-105 group-hover:opacity-80"
               />
               <div className="absolute inset-0 -z-10 veil" />
-              <h3 className="text-xl font-extrabold">{cat.title}</h3>
-              <p className="mt-1 text-xs text-muted-foreground">{cat.caption}</p>
+                            <h3 className="text-xl font-extrabold text-white">{cat.title}</h3>
+              <p className="mt-1 text-xs text-white/70">{cat.caption}</p>
               <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-gold">
                 مشاهده <ChevronLeft className="size-3.5" />
               </span>
