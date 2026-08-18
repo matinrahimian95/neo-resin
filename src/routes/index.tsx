@@ -75,7 +75,7 @@ function Index() {
           <h1 className="max-w-3xl text-4xl leading-[1.25] font-black tracking-tight md:text-6xl md:leading-[1.2]">
   <span className="text-gold-gradient">هنر رزین دست‌ساز</span>
 </h1>
-          <p className="mt-6 max-w-xl text-sm leading-8 text-muted-foreground md:text-base">
+                    <p className="mt-6 max-w-xl text-sm leading-8 text-white/80 md:text-base">
             هر قطعه در آتلیه نئو رزین با دست ریخته‌گری، پرداخت و امضا می‌شود. آثاری بی‌تکرار برای
             خانه‌ها و هدیه‌هایی که به یاد می‌مانند.
           </p>
@@ -88,7 +88,7 @@ function Index() {
             </Link>
             <Link
               to="/custom-orders"
-              className="rounded-sm hairline px-7 py-3.5 text-sm font-bold text-foreground transition-colors hover:text-gold"
+              className="rounded-sm bg-gold-gradient px-7 py-3.5 text-sm font-bold text-primary-foreground shadow-glow transition-opacity hover:opacity-90"
             >
               سفارش اختصاصی
             </Link>
