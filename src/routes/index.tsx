@@ -60,20 +60,20 @@ function Index() {
     <>
       {/* Hero */}
       <section className="relative isolate overflow-hidden">
-        <img
+                <img
           src={heroImg}
           alt="سینی رزین دست‌ساز مشکی با رگه‌های طلا"
           width={1600}
           height={1104}
-          className="absolute inset-0 -z-10 size-full object-cover opacity-55"
+          className="absolute inset-0 -z-10 size-full object-cover"
         />
-        <div className="absolute inset-0 -z-10 veil" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         <div className="mx-auto flex min-h-[86vh] max-w-7xl flex-col justify-end px-5 pt-28 pb-16 md:px-8 md:pb-24">
           <p className="mb-5 text-[11px] tracking-[0.4em] text-gold uppercase">
             Handcrafted Resin Art
           </p>
-          <h1 className="max-w-3xl text-4xl leading-[1.25] font-black tracking-tight md:text-6xl md:leading-[1.2]">
-  <span className="text-gold-gradient">هنر رزین دست‌ساز</span>
+                    <h1 className="max-w-3xl text-4xl leading-[1.25] font-black tracking-tight md:text-6xl md:leading-[1.2]">
+  <span className="text-gold">هنر رزین دست‌ساز</span>
 </h1>
                     <p className="mt-6 max-w-xl text-sm leading-8 text-white/80 md:text-base">
             هر قطعه در آتلیه نئو رزین با دست ریخته‌گری، پرداخت و امضا می‌شود. آثاری بی‌تکرار برای
