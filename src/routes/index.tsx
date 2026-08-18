@@ -16,7 +16,6 @@ import { faqs } from "@/lib/faqs";
 import heroImg from "@/assets/hero.jpg";
 import artistImg from "@/assets/artist.jpg";
 import textureImg from "@/assets/texture.jpg";
-const heroImages = [heroImg, textureImg, artistImg];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -59,6 +58,9 @@ function Index() {
   const { data: products } = useSuspenseQuery(productsQueryOptions());
     const [heroIndex, setHeroIndex] = useState(0);
   const featuredProducts = products.filter((p) => p.featured);
+    const heroImages = (featuredProducts.length > 0 ? featuredProducts : products)
+    .slice(0, 5)
+    .map((p) => p.image);
   return (
     <>
       {/* Hero */}
