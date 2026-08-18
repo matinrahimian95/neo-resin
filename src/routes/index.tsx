@@ -56,59 +56,20 @@ const instagramTiles = [heroImg, textureImg, artistImg, ...categories.map((c) =>
 
 function Index() {
   const { data: products } = useSuspenseQuery(productsQueryOptions());
-    const [heroIndex, setHeroIndex] = useState(0);
   const featuredProducts = products.filter((p) => p.featured);
-    const heroImages = (featuredProducts.length > 0 ? featuredProducts : products)
-    .slice(0, 5)
-    .map((p) => p.image);
+    
   return (
     <>
       {/* Hero */}
       <section className="relative isolate overflow-hidden">
-                        {heroImages.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt="سینی رزین دست‌ساز مشکی با رگه‌های طلا"
-            width={1600}
-            height={1104}
-            className={`absolute inset-0 -z-10 size-full object-cover transition-opacity duration-700 ${
-              i === heroIndex ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-        <button
-          type="button"
-          onClick={() =>
-            setHeroIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length)
-          }
-          className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
-          aria-label="تصویر قبلی"
-        >
-          <ChevronLeft className="size-5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => setHeroIndex((prev) => (prev + 1) % heroImages.length)}
-          className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
-          aria-label="تصویر بعدی"
-        >
-          <ChevronRight className="size-5" />
-        </button>
-        <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-          {heroImages.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setHeroIndex(i)}
-              className={`size-2 rounded-full transition-colors ${
-                i === heroIndex ? "bg-gold" : "bg-white/40"
-              }`}
-              aria-label={`رفتن به تصویر ${i + 1}`}
-            />
-          ))}
-        </div>
+                          <img
+          src={heroImg}
+          alt="سینی رزین دست‌ساز مشکی با رگه‌های طلا"
+          width={1600}
+          height={1104}
+          className="absolute inset-0 -z-10 size-full object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />      
         <div className="mx-auto flex min-h-[86vh] max-w-7xl flex-col justify-end px-5 pt-28 pb-16 md:px-8 md:pb-24">
           <p className="mb-5 text-[11px] tracking-[0.4em] text-gold uppercase">
             Handcrafted Resin Art
