@@ -18,7 +18,6 @@ export function ProductCard({ product }: { product: Product }) {
             height={1100}
             className="size-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
           />
-          <div className="pointer-events-none absolute inset-0 veil opacity-70" />
           {product.stock <= 0 ? (
             <span className="absolute right-3 top-3 rounded-sm bg-background/85 px-2.5 py-1 text-[10px] font-bold text-muted-foreground">
               ناموجود
